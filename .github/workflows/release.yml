@@ -24,7 +24,7 @@ jobs:
           fetch-depth: 0
 
       - name: debug
-        run: git show-ref
+        run: git branch -r 
 
       - name: conventional Changelog Action
         id: changelog
