@@ -18,6 +18,7 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           version-file: "./package.json,./package-lock.json"
           git-branch: "release-from-${{ github.sha }}"
+          skip-on-empty: false
 
       - name: create PR with release info
         id: create-pr
