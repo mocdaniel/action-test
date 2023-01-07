@@ -23,6 +23,9 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: debug
+        run: git show-ref
+
       - name: conventional Changelog Action
         id: changelog
         uses: TriPSs/conventional-changelog-action@v3
