@@ -9,7 +9,6 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3
 
       - name: create temporary branch
         uses: peterjgrainger/action-create-branch@v2.2.0
@@ -19,6 +18,8 @@ jobs:
           sha: "${{ github.sha }}"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - uses: actions/checkout@v3
 
       - name: conventional Changelog Action
         id: changelog
