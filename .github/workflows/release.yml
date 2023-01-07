@@ -17,6 +17,8 @@ jobs:
         with:
           branch: "release-from-${{ github.sha }}"
           sha: "${{ github.sha }}"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: conventional Changelog Action
         id: changelog
