@@ -22,10 +22,14 @@ jobs:
       - name: create PR with release info
         id: create-pr
         run: gh pr create -B main -H release-from-${{ github.sha }} --title 'Merge new release into main' --body 'Created by Github action'
+	env:
+	  GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: merge PR with release info
         id: merge-pr
         run: git checkout release-from-${{ github.sha }} && gh pr merge --admin -A <eddiehub mail> --merge --subject 'Merge release info' --delete-branch
+	env:
+	  GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: create release
         uses: actions/create-release@v1
