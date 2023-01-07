@@ -1,0 +1,38 @@
+name: Releases
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  changelog:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: conventional Changelog Action
+        id: changelog
+        uses: TriPSs/conventional-changelog-action@v3
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          version-file: "./package.json,./package-lock.json"
+          git-branch: "release-from-${{ github.sha }}"
+
+      - name: create PR with release info
+        id: create-pr
+        run: gh pr create -B main -H release-from-${{ github.sha }} --title 'Merge new release into main' --body 'Created by Github action'
+
+      - name: merge PR with release info
+        id: merge-pr
+        run: git checkout release-from-${{ github.sha }} && gh pr merge --admin -A <eddiehub mail> --merge --subject 'Merge release info' --delete-branch
+
+      - name: create release
+        uses: actions/create-release@v1
+        if: ${{ steps.changelog.outputs.skipped == 'false' }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ steps.changelog.outputs.tag }}
+          release_name: ${{ steps.changelog.outputs.tag }}
+          body: ${{ steps.changelog.outputs.clean_changelog }}
