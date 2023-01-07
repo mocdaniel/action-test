@@ -42,7 +42,7 @@ jobs:
 
       - name: merge PR with release info
         id: merge-pr
-        run: git checkout release-from-${{ github.sha }} && gh pr merge --admin -A <eddiehub mail> --merge --subject 'Merge release info' --delete-branch
+        run: gh pr merge --admin -A <eddiehub mail> --merge --subject 'Merge release info' --delete-branch
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
