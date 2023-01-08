@@ -33,11 +33,10 @@ jobs:
           version-file: "./package.json,./package-lock.json"
           skip-on-empty: false
           skip-git-pull: true
-          skip-commit: true
-          skip-tag: true
+          git-push: false
 
       - name: Stash changes, change branch and commit 
-        run: git fetch --all && git stash && git checkout --track origin/release-from-${{ github.sha }} && git stash pop && git commit -m "Add release info" -a
+        run: git fetch --all &&  git branch -M release-from-${{ github.sha }} && git push origin release-from-${{ github.sha }}
 
       - name: create PR with release info
         id: create-pr
