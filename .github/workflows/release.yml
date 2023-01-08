@@ -37,7 +37,7 @@ jobs:
           skip-commit: true
 
       - name: Stash changes, change branch and commit 
-        run: git fetch --all && git stash && git checkout --track origin/release-from-${{ github.sha }} && git stash pop && git commit . -m "Add release info"
+        run: git fetch --all && git stash && git checkout --track origin/release-from-${{ github.sha }} && git stash pop && git commit -m "Add release info" -a
 
       - name: create PR with release info
         id: create-pr
