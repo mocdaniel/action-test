@@ -33,15 +33,15 @@ jobs:
           version-file: "./package.json,./package-lock.json"
           skip-on-empty: false
           skip-git-pull: true
-          skip-tag: true
           skip-commit: true
+	  skip-tag: true
 
       - name: Stash changes, change branch and commit 
         run: git fetch --all && git stash && git checkout --track origin/release-from-${{ github.sha }} && git stash pop && git commit -m "Add release info" -a
 
       - name: create PR with release info
         id: create-pr
-        run: gh pr create -B main -H release-from-${{ github.sha }} --title 'Merge new release into main' --body 'Created by Github action'
+        run: gh pr create -B main --title 'Merge new release into main' --body 'Created by Github action'
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
