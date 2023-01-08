@@ -1,8 +1,12 @@
 name: Releases
 on:
-  push:
+  workflow_run:
+    workflows:
+      - Format
     branches:
       - main
+    types:
+      - completed
 
 jobs:
   changelog:
